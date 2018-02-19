@@ -1,0 +1,31 @@
+.menuIron:global(.active) {
+    background: linear-gradient(to right, #767676, white) !important;
+}
+
+.menuBrown:global(.active) {
+    background: linear-gradient(to right, #a5673f, white) !important;
+}
+
+.menuSilver:global(.active) {
+    background: linear-gradient(to right, rgba(255,255,255,.15), white) !important;
+}
+
+.menuYellow:global(.active) {
+    background: linear-gradient(to right, #fbbd08, white) !important;
+}
+
+.menuWhite:global(.active) {
+    background: white !important;
+}
+
+.menuWhite:global(.active) span {
+    color: black !important;
+}
+
+.menuBlack:global(.active) {
+    background: linear-gradient(to right,black, white) !important;
+}
+
+.menuBlue:global(.active) {
+    background: linear-gradient(to right, #2185d0, white) !important;
+}
