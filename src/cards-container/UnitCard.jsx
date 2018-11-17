@@ -13,13 +13,14 @@ export default withRouter(({ unit, history }) => {
   return (
     <Card onClick={handleClick}>
       <Card.Content>
-        <Image src={`${STATIC_BASE_URL}/img/${unit.CardID}/INIT.png`} size="tiny" floated="left" verticalAlign="middle" />
-        <Card.Header>
-          {unit.Name}
-        </Card.Header>
-        <Card.Meta>
-          {unit.RealName}
-        </Card.Meta>
+        <Image
+          src={`${STATIC_BASE_URL}/ico/0/${unit.CardID}.png`}
+          size="tiny"
+          floated="left"
+          verticalAlign="middle"
+        />
+        <Card.Header>{unit.Name}</Card.Header>
+        <Card.Meta>{unit.RealName}</Card.Meta>
         <Card.Meta>
           No.<strong>{unit.CardID}</strong>
         </Card.Meta>

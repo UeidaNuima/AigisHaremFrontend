@@ -1,6 +1,4 @@
-export const API_BASE_URL = 'http://aigis.naberi.us/api/';
-
-export const STATIC_BASE_URL = 'http://aigis.naberi.us/static/';
+export const STATIC_BASE_URL = 'https://aigisapi.naberi.us/static';
 
 export const RARITY = {
   iron: 0,
