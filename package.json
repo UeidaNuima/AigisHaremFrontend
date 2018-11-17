@@ -31,7 +31,7 @@
   },
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html",
+    "build": "parcel build src/index.html --public-url /",
     "watch": "parcel watch src/index.html",
     "lint": "eslint src/**/*.jsx"
   }
