@@ -24,10 +24,18 @@ export default () => (
     <p>
       说来这个logo本来想画个狗头的，在画的时候感觉还不错，画完了一看这tm不是海豚吗
     </p>
+    <Header as="h2" dividing>
+      Changelog
+    </Header>
     <p>
       <time>2018/11/17</time>
       修改了后端接口，虽然以后可能还会产生别的问题但是应该不会丢文本了
     </p>
+    <p>
+      <time>2018/12/2</time>
+      把要饭码换成了好友码，商家码都tm看不见别人的备注，马云我日你先人
+    </p>
+    <p>有空会做一下移动端的适配，现在先摸了</p>
     <Header as="h2" dividing>
       <del>生活所迫</del>，支付宝
     </Header>
