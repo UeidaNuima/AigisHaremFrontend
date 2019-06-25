@@ -228,12 +228,14 @@ class UnitModal extends Component {
                   ))}
               </Menu>
               {currentImg && (
-                <Image
-                  key={currentImg}
-                  centered
-                  style={{ maxHeight: 640 }}
-                  src={`http://assets.millennium-war.net${currentImg}`}
-                />
+                <div style={{ height: 640 }}>
+                  <Image
+                    key={currentImg}
+                    centered
+                    style={{ maxHeight: 640 }}
+                    src={`http://assets.millennium-war.net${currentImg}`}
+                  />
+                </div>
               )}
             </div>
           )}

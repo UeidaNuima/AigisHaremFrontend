@@ -75,7 +75,7 @@ class App extends Component {
       this.previousLocation !== location
     );
     return (
-      <div className="App">
+      <div className="App" style={{ height: '100%' }}>
         <Sidebar.Pushable>
           <Sidebar
             visible={

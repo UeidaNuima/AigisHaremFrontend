@@ -35,7 +35,11 @@ export default () => (
       <time>2018/12/2</time>
       把要饭码换成了好友码，商家码都tm看不见别人的备注，马云我日你先人
     </p>
-    <p>有空会做一下移动端的适配，现在先摸了</p>
+    <p>
+      <time>2019/6/25</time>
+      增加了移动端的适配
+    </p>
+    <p>有空可以尝试做成pwa</p>
     <Header as="h2" dividing>
       <del>生活所迫</del>，支付宝
     </Header>
