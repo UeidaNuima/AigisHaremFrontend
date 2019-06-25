@@ -6,7 +6,6 @@ import {
   Modal,
   Loader,
   Image,
-  Grid,
   Menu,
   Progress,
   Segment,
@@ -153,250 +152,264 @@ class UnitModal extends Component {
             padding: 0,
           }}
         >
+          <div style={{ textAlign: 'center', marginBottom: 20 }}>
+            <Button.Group inverted>
+              <Button
+                inverted
+                content="画像"
+                onClick={() => {
+                  this.setState({ currentTab: 'image' });
+                }}
+                active={this.state.currentTab === 'image'}
+              />
+              {this.state.unit.HarlemEventText.length > 0 && (
+                <Button
+                  inverted
+                  content="寝室"
+                  active={this.state.currentTab === 'harem'}
+                  onClick={() => {
+                    this.setState({ currentTab: 'harem' });
+                  }}
+                />
+              )}
+              {this.state.unit.HarlemEventText.length > 0 && (
+                <Button
+                  inverted
+                  content="对话"
+                  active={this.state.currentTab === 'talk'}
+                  onClick={() => {
+                    this.setState({ currentTab: 'talk' });
+                  }}
+                />
+              )}
+            </Button.Group>
+          </div>
           {this.state.currentTab === 'image' && (
-            <Grid>
-              <Grid.Column width={2} stretched>
-                <Menu fluid vertical inverted tabular icon="labeled">
-                  {this.state.unit.Images.Stands.map((img, index) => (
+            <div>
+              <Menu
+                tabular
+                inverted
+                icon="labeled"
+                style={{
+                  background: 'none',
+                  borderBottom: '1px solid #d4d4d5',
+                }}
+              >
+                {this.state.unit.Images.Stands.map((img, index) => (
+                  <Menu.Item
+                    color="green"
+                    className={`${styles.basicTab} ${styles.greenTab}`}
+                    key={img}
+                    icon="comment"
+                    active={this.state.activeImg === index}
+                    onClick={() => {
+                      this.setState({ activeImg: index });
+                    }}
+                  />
+                ))}
+                {this.state.version === 'r' &&
+                  this.state.unit.Images.CGs.map((img, index) => (
                     <Menu.Item
-                      color="green"
-                      className={`${styles.basicTab} ${styles.greenTab}`}
+                      color="red"
+                      className={`${styles.basicTab} ${styles.redTab}`}
                       key={img}
-                      icon="comment"
-                      active={this.state.activeImg === index}
+                      icon="heart"
+                      active={
+                        this.state.activeImg ===
+                        index + this.state.unit.Images.Stands.length
+                      }
                       onClick={() => {
-                        this.setState({ activeImg: index });
+                        this.setState({
+                          activeImg:
+                            index + this.state.unit.Images.Stands.length,
+                        });
                       }}
                     />
                   ))}
-                  {this.state.version === 'r' &&
-                    this.state.unit.Images.CGs.map((img, index) => (
+              </Menu>
+              {currentImg && (
+                <Image
+                  key={currentImg}
+                  centered
+                  style={{ maxHeight: 640 }}
+                  src={`http://assets.millennium-war.net${currentImg}`}
+                />
+              )}
+            </div>
+          )}
+
+          {this.state.currentTab === 'harem' &&
+            this.state.unit.HarlemEventText.length > 0 && (
+              <div>
+                <Menu
+                  tabular
+                  inverted
+                  icon="labeled"
+                  style={{
+                    background: 'none',
+                    borderBottom: '1px solid #d4d4d5',
+                  }}
+                >
+                  {harems
+                    .filter(
+                      harem =>
+                        (this.state.version === 'r' && harem.type === 'r') ||
+                        harem.type === 'a',
+                    )
+                    .map((harem, index) => (
                       <Menu.Item
-                        color="red"
-                        className={`${styles.basicTab} ${styles.redTab}`}
-                        key={img}
-                        icon="heart"
-                        active={
-                          this.state.activeImg ===
-                          index + this.state.unit.Images.Stands.length
-                        }
+                        color={harem.type === 'a' ? 'green' : 'red'}
+                        className={`${styles.basicTab} ${
+                          harem.type === 'a' ? styles.greenTab : styles.redTab
+                        }`}
+                        key={`${harem.img}-${harem.talk}`}
+                        icon={harem.type === 'a' ? 'comment' : 'heart'}
+                        active={this.state.activeHarem === index}
                         onClick={() => {
                           this.setState({
-                            activeImg:
-                              index + this.state.unit.Images.Stands.length,
+                            activeHarem: index,
+                            activeTalkPage: 0,
                           });
                         }}
                       />
                     ))}
                 </Menu>
-              </Grid.Column>
-              <Grid.Column width={13}>
-                {currentImg && (
-                  <Image
-                    key={currentImg}
-                    centered
-                    style={{ height: 640 }}
-                    src={`http://assets.millennium-war.net${currentImg}`}
+                <div
+                  key={`${currentHarem.img}-${currentHarem.talk}`}
+                  style={{
+                    height: 640,
+                    width: 960,
+                    background: this.state.unit.Kind
+                      ? `url(http://assets.millennium-war.net${
+                          currentHarem.img
+                        }),url(${officeImg})`
+                      : `url(http://assets.millennium-war.net${
+                          currentHarem.img
+                        }),url(${barImg})`,
+                    backgroundSize: 'auto 640px, 960px 640px',
+                    backgroundRepeat: 'no-repeat, no-repeat',
+                    backgroundPosition: 'center, top left',
+                    margin: 'auto',
+                    position: 'relative',
+                  }}
+                >
+                  <Button
+                    icon="angle left"
+                    color="black"
+                    disabled={this.state.activeTalkPage === 0}
+                    onClick={() => {
+                      talkPageChange(0);
+                    }}
+                    className={styles.gradientButton}
                   />
-                )}
-              </Grid.Column>
-            </Grid>
-          )}
-
-          {this.state.currentTab === 'harem' &&
-            this.state.unit.HarlemEventText.length > 0 && (
-              <Grid>
-                <Grid.Column width={2} stretched>
-                  <Menu fluid vertical inverted tabular icon="labeled">
-                    {harems
-                      .filter(
-                        harem =>
-                          (this.state.version === 'r' && harem.type === 'r') ||
-                          harem.type === 'a',
-                      )
-                      .map((harem, index) => (
-                        <Menu.Item
-                          color={harem.type === 'a' ? 'green' : 'red'}
-                          className={`${styles.basicTab} ${
-                            harem.type === 'a' ? styles.greenTab : styles.redTab
-                          }`}
-                          key={`${harem.img}-${harem.talk}`}
-                          icon={harem.type === 'a' ? 'comment' : 'heart'}
-                          active={this.state.activeHarem === index}
-                          onClick={() => {
-                            this.setState({
-                              activeHarem: index,
-                              activeTalkPage: 0,
-                            });
-                          }}
-                        />
-                      ))}
-                  </Menu>
-                </Grid.Column>
-                <Grid.Column width={13}>
-                  <div
-                    key={`${currentHarem.img}-${currentHarem.talk}`}
+                  <Segment
+                    basic
+                    inverted
+                    onClick={talkPageChange}
                     style={{
-                      height: 640,
-                      width: 960,
-                      background: this.state.unit.Kind
-                        ? `url(http://assets.millennium-war.net${
-                            currentHarem.img
-                          }),url(${officeImg})`
-                        : `url(http://assets.millennium-war.net${
-                            currentHarem.img
-                          }),url(${barImg})`,
-                      backgroundSize: 'auto 640px, 960px 640px',
-                      backgroundRepeat: 'no-repeat, no-repeat',
-                      backgroundPosition: 'center, top left',
-                      margin: 'auto',
-                      position: 'relative',
+                      background: 'rgba(0, 0, 0, 0.5)',
+                      bottom: 0,
+                      position: 'absolute',
+                      height: 200,
+                      width: '100%',
+                      fontSize: '1.4em',
+                      userSelect: 'none',
                     }}
                   >
-                    <Button
-                      icon="angle left"
-                      color="black"
-                      disabled={this.state.activeTalkPage === 0}
-                      onClick={() => {
-                        talkPageChange(0);
-                      }}
-                      className={styles.gradientButton}
-                    />
-                    <Segment
-                      basic
+                    <div style={{ marginLeft: 50 }}>
+                      {haremTalkPages[this.state.activeTalkPage]
+                        .split('\n')
+                        .map((line, index) => (
+                          <span key={`${index} - ${line}`}>
+                            {line}
+                            <br />
+                          </span>
+                        ))}
+                    </div>
+                    <Progress
+                      value={this.state.activeTalkPage + 1}
+                      total={haremTalkPages.length}
                       inverted
-                      onClick={talkPageChange}
-                      style={{
-                        background: 'rgba(0, 0, 0, 0.5)',
-                        bottom: 0,
-                        position: 'absolute',
-                        height: 200,
-                        width: '100%',
-                        fontSize: '1.4em',
-                        userSelect: 'none',
-                      }}
-                    >
-                      <div style={{ marginLeft: 50 }}>
-                        {haremTalkPages[this.state.activeTalkPage]
-                          .split('\n')
-                          .map((line, index) => (
-                            <span key={`${index} - ${line}`}>
-                              {line}
-                              <br />
-                            </span>
-                          ))}
-                      </div>
-                      <Progress
-                        value={this.state.activeTalkPage + 1}
-                        total={haremTalkPages.length}
-                        inverted
-                        attached="bottom"
-                        color="green"
-                      />
-                    </Segment>
-                  </div>
-                </Grid.Column>
-              </Grid>
+                      attached="bottom"
+                      color="green"
+                    />
+                  </Segment>
+                </div>
+              </div>
             )}
 
           {this.state.currentTab === 'talk' &&
             this.state.unit.HarlemEventText.length > 0 && (
-              <Grid>
-                <Grid.Column width={2} stretched>
-                  <Menu fluid vertical inverted tabular icon="labeled">
-                    {this.state.unit.HarlemEventText.map((talk, index) => (
+              <div>
+                <Menu
+                  tabular
+                  inverted
+                  icon="labeled"
+                  style={{
+                    background: 'none',
+                    borderBottom: '1px solid #d4d4d5',
+                  }}
+                >
+                  {this.state.unit.HarlemEventText.map((talk, index) => (
+                    <Menu.Item
+                      color="green"
+                      className={`${styles.basicTab} ${styles.greenTab}`}
+                      key={`${index}-${talk.substr(0, 10)}`}
+                      icon="comment"
+                      active={this.state.activeTalk === index}
+                      onClick={() => {
+                        this.setState({ activeTalk: index });
+                      }}
+                    />
+                  ))}
+                  {this.state.version === 'r' &&
+                    this.state.unit.HarlemText.map((talk, index) => (
                       <Menu.Item
-                        color="green"
-                        className={`${styles.basicTab} ${styles.greenTab}`}
+                        color="red"
+                        className={`${styles.basicTab} ${styles.redTab}`}
                         key={`${index}-${talk.substr(0, 10)}`}
-                        icon="comment"
-                        active={this.state.activeTalk === index}
+                        icon="heart"
+                        active={
+                          this.state.activeTalk ===
+                          index + this.state.unit.HarlemEventText.length
+                        }
                         onClick={() => {
-                          this.setState({ activeTalk: index });
+                          this.setState({
+                            activeTalk:
+                              index + this.state.unit.HarlemEventText.length,
+                          });
                         }}
                       />
                     ))}
-                    {this.state.version === 'r' &&
-                      this.state.unit.HarlemText.map((talk, index) => (
-                        <Menu.Item
-                          color="red"
-                          className={`${styles.basicTab} ${styles.redTab}`}
-                          key={`${index}-${talk.substr(0, 10)}`}
-                          icon="heart"
-                          active={
-                            this.state.activeTalk ===
-                            index + this.state.unit.HarlemEventText.length
-                          }
-                          onClick={() => {
-                            this.setState({
-                              activeTalk:
-                                index + this.state.unit.HarlemEventText.length,
-                            });
-                          }}
-                        />
-                      ))}
-                  </Menu>
-                </Grid.Column>
-                <Grid.Column width={13}>
-                  <Container
-                    key={currentTalk.substr(0, 10)}
-                    text
-                    style={{ height: 640, overflowY: 'auto', padding: 20 }}
-                  >
-                    {currentTalk
-                      .split(/\n\n|\r\n\r\n/)
-                      .map((talk, talkIndex) => (
-                        <p>
-                          {talk.split(/\n|\r\n/).map((line, lineIndex) => {
-                            let newLine = line;
-                            if (line.indexOf('＠') >= 0) {
-                              newLine = <strong>{line}</strong>;
-                            }
-                            return (
-                              <span key={`${talkIndex} - ${lineIndex}`}>
-                                {newLine}
-                              </span>
-                            );
-                          })}
-                        </p>
-                      ))}
-                  </Container>
-                </Grid.Column>
-              </Grid>
+                </Menu>
+                <Container
+                  key={currentTalk.substr(0, 10)}
+                  text
+                  style={{ height: 640, overflowY: 'auto', padding: 20 }}
+                >
+                  {currentTalk.split(/\n\n|\r\n\r\n/).map((talk, talkIndex) => (
+                    <p>
+                      {talk.split(/\n|\r\n/).map((line, lineIndex) => {
+                        let newLine = line;
+                        if (line.indexOf('＠') >= 0) {
+                          newLine = (
+                            <strong style={{ textDecoration: 'underline' }}>
+                              {line}
+                            </strong>
+                          );
+                        }
+                        return (
+                          <span key={`${talkIndex} - ${lineIndex}`}>
+                            {newLine}
+                          </span>
+                        );
+                      })}
+                    </p>
+                  ))}
+                </Container>
+              </div>
             )}
         </Modal.Content>
-        <Modal.Actions style={{ textAlign: 'center' }}>
-          <Button.Group inverted>
-            <Button
-              inverted
-              content="画像"
-              onClick={() => {
-                this.setState({ currentTab: 'image' });
-              }}
-              active={this.state.currentTab === 'image'}
-            />
-            {this.state.unit.HarlemEventText.length > 0 && (
-              <Button
-                inverted
-                content="寝室"
-                active={this.state.currentTab === 'harem'}
-                onClick={() => {
-                  this.setState({ currentTab: 'harem' });
-                }}
-              />
-            )}
-            {this.state.unit.HarlemEventText.length > 0 && (
-              <Button
-                inverted
-                content="对话"
-                active={this.state.currentTab === 'talk'}
-                onClick={() => {
-                  this.setState({ currentTab: 'talk' });
-                }}
-              />
-            )}
-          </Button.Group>
-        </Modal.Actions>
       </Modal>
     );
   }
