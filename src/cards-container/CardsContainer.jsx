@@ -12,6 +12,17 @@ import client from '../utils/agent';
 import UnitCard from './UnitCard';
 import { RARITY, RARITY_COLOR } from '../utils/constants';
 
+const query = gql`
+  query($rare: Int!) {
+    cards(Rare: $rare) {
+      CardID
+      Kind
+      Name
+      SellPrice
+    }
+  }
+`;
+
 class CardsContainer extends Component {
   constructor(props) {
     super();
@@ -37,24 +48,23 @@ class CardsContainer extends Component {
     const rarity = RARITY[props.match.params.rarity];
     client
       .query({
-        query: gql`
-          query($rare: Int!) {
-            cards(Rare: $rare) {
-              CardID
-              Kind
-              Name
-              SellPrice
-            }
-          }
-        `,
+        query,
         variables: {
           rare: rarity,
         },
       })
       .then(res => {
+        if (rarity === 4 || rarity === 5) {
+          return client
+            .query({ query, variables: { rare: rarity + 6 } })
+            .then(res2 => [...res.data.cards, ...res2.data.cards]);
+        }
+        return res.data.cards;
+      })
+      .then(res => {
         this.setState({
           rarity,
-          units: res.data.cards.filter(card => card.SellPrice !== 0),
+          units: res.filter(card => card.SellPrice !== 0),
           loading: false,
         });
       });
