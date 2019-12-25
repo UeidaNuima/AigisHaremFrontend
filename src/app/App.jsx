@@ -76,7 +76,7 @@ class App extends Component {
     );
     return (
       <div className="App">
-        <Sidebar.Pushable>
+        <Sidebar.Pushable style={{ minHeight: '100vh' }}>
           <Sidebar
             visible={
               this.state.width >= Responsive.onlyMobile.maxWidth

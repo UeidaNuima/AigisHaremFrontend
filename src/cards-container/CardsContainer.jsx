@@ -14,7 +14,7 @@ import { RARITY, RARITY_COLOR } from '../utils/constants';
 
 const query = gql`
   query($rare: Int!) {
-    cards(Rare: $rare) {
+    Cards(Rare: $rare) {
       CardID
       Kind
       Name
@@ -57,9 +57,9 @@ class CardsContainer extends Component {
         if (rarity === 4 || rarity === 5) {
           return client
             .query({ query, variables: { rare: rarity + 6 } })
-            .then(res2 => [...res.data.cards, ...res2.data.cards]);
+            .then(res2 => [...res.data.Cards, ...res2.data.Cards]);
         }
-        return res.data.cards;
+        return res.data.Cards;
       })
       .then(res => {
         this.setState({

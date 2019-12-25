@@ -28,6 +28,14 @@ export default () => (
       Changelog
     </Header>
     <p>
+      <time>2019/12/25</time>
+      修改了后端接口，进暑假可能会整体重写一下
+    </p>
+    <p>
+      <time>2019/6/25</time>
+      增加了移动端的适配
+    </p>
+    <p>
       <time>2019/10/2</time>
       增加了两个英灵稀有度单位的显示
     </p>
@@ -39,11 +47,6 @@ export default () => (
       <time>2018/12/2</time>
       把要饭码换成了好友码，商家码都tm看不见别人的备注，马云我日你先人
     </p>
-    <p>
-      <time>2019/6/25</time>
-      增加了移动端的适配
-    </p>
-    <p>有空可以尝试做成pwa</p>
     <Header as="h2" dividing>
       <del>生活所迫</del>，支付宝
     </Header>

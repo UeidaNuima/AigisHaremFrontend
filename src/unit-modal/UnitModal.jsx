@@ -42,7 +42,7 @@ class UnitModal extends Component {
       .query({
         query: gql`
           query($id: Int!) {
-            card(CardID: $id) {
+            Card(CardID: $id) {
               CardID
               Kind
               Name
@@ -54,19 +54,19 @@ class UnitModal extends Component {
           }
         `,
         variables: {
-          id: this.props.match.params.id,
+          id: Number.parseInt(this.props.match.params.id, 10),
         },
       })
       .then(res => {
         this.setState({
           unit: {
             Images: {
-              Stands: res.data.card.ImageStand,
-              CGs: res.data.card.ImageCG,
+              Stands: res.data.Card.ImageStand,
+              CGs: res.data.Card.ImageCG,
             },
-            HarlemEventText: res.data.card.HarlemTextA,
-            HarlemText: res.data.card.HarlemTextR,
-            Kind: res.data.card.Kind,
+            HarlemEventText: res.data.Card.HarlemTextA,
+            HarlemText: res.data.Card.HarlemTextR,
+            Kind: res.data.Card.Kind,
           },
           loading: false,
         });
