@@ -233,7 +233,7 @@ class UnitModal extends Component {
                     key={currentImg}
                     centered
                     style={{ maxHeight: 640 }}
-                    src={`http://assets.millennium-war.net${currentImg}`}
+                    src={`https://drc1bk94f7rq8.cloudfront.net${currentImg.replace(/https?:\/\/drc1bk94f7rq8\.cloudfront\.net/g, '')}`}
                   />
                 </div>
               )}
