@@ -17,6 +17,8 @@ import officeImg from '../image/office.png';
 import barImg from '../image/bar.png';
 import styles from './style.css';
 
+const fuckDMMUrl = url => url.replace(/https?:\/\/drc1bk94f7rq8\.cloudfront\.net/g, '')
+
 class UnitModal extends Component {
   state = {
     unit: {
@@ -233,7 +235,7 @@ class UnitModal extends Component {
                     key={currentImg}
                     centered
                     style={{ maxHeight: 640 }}
-                    src={`https://drc1bk94f7rq8.cloudfront.net${currentImg.replace(/https?:\/\/drc1bk94f7rq8\.cloudfront\.net/g, '')}`}
+                    src={`https://drc1bk94f7rq8.cloudfront.net${fuckDMMUrl(currentImg)}`}
                   />
                 </div>
               )}
@@ -283,10 +285,10 @@ class UnitModal extends Component {
                     width: 960,
                     background: this.state.unit.Kind
                       ? `url(http://assets.millennium-war.net${
-                          currentHarem.img
+                          fuckDMMUrl(currentHarem.img)
                         }),url(${officeImg})`
                       : `url(http://assets.millennium-war.net${
-                          currentHarem.img
+                          fuckDMMUrl(currentHarem.img)
                         }),url(${barImg})`,
                     backgroundSize: 'auto 640px, 960px 640px',
                     backgroundRepeat: 'no-repeat, no-repeat',
