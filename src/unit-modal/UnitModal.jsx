@@ -118,8 +118,9 @@ class UnitModal extends Component {
     }
     const currentHarem = harems[this.state.activeHarem];
     const haremTalkPages = currentHarem
-      ? currentHarem.talk.split('\r\n\r\n')
+      ? currentHarem.talk.split(/\r?\n\r?\n/)
       : [];
+    console.log(haremTalkPages)
     const talkPageChange = (direction = true) => {
       if (direction && this.state.activeTalkPage < haremTalkPages.length - 1) {
         this.setState({ activeTalkPage: this.state.activeTalkPage + 1 });
