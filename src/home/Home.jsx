@@ -28,6 +28,10 @@ export default () => (
       Changelog
     </Header>
     <p>
+      <time>2021/2/25</time>
+      修复寝室美图和对话分段问题
+    </p>
+    <p>
       <time>2019/12/25</time>
       修改了后端接口，进暑假可能会整体重写一下
     </p>
